@@ -575,7 +575,7 @@ public final class ImNodes {
         ImVec2 gridPos = ImVec2(gridPosX, gridPosY);
         ImNodes::SetNodeGridSpacePos(nodeId, gridPos);
     */
-    
+
     public static ImVec2 getNodeScreenSpacePos(final int nodeId) {
         final ImVec2 dst = new ImVec2();
         nGetNodeScreenSpacePos(dst, nodeId);

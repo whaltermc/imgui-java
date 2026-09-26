@@ -2,7 +2,7 @@ package imgui.moulberry90.flag;
 
 
 /**
- * Flags for {@link imgui.moulberry90.ImGui#tableSetupColumn(String, int)}
+ * Flags for {@link imgui.moulberry90.moulberry92.ImGui#tableSetupColumn(String, int)}
  */
 public final class ImGuiTableColumnFlags {
     private ImGuiTableColumnFlags() {
@@ -100,7 +100,7 @@ public final class ImGuiTableColumnFlags {
     public static final int NoSortDescending = 2048;
 
     /**
-     * TableHeadersRow() will not submit horizontal label for this column. Convenient for some small columns. Name will still appear in context menu or in angled headers.
+     * TableHeadersRow() will submit an empty label for this column. Convenient for some small columns. Name will still appear in context menu or in angled headers. You may append into this cell by calling TableSetColumnIndex() right after the TableHeadersRow() call.
      *
      * <p>Definition: {@code 1 << 12}
      */

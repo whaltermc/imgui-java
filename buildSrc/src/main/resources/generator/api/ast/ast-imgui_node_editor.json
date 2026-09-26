@@ -1,9 +1,9 @@
 {
   "info" : {
     "source" : "include/imgui-node-editor/imgui_node_editor.h",
-    "hash" : "22122655801cd34b78703e44a74d5ee9",
+    "hash" : "dc12135522738cbd4dbe5d2575829dc9",
     "url" : "https://github.com/thedmd/imgui-node-editor",
-    "revision" : "b302971455b3719ec9b5fb94b2f92d27c62b9ff0"
+    "revision" : "021aa0ea4da13fed864bafb2a92d4c5205076866"
   },
   "decls" : [ {
     "@type" : "AstNamespaceDecl",
@@ -190,22 +190,22 @@
           "@type" : "AstFieldDecl",
           "name" : "SaveSettings",
           "qualType" : "ConfigSaveSettings",
-          "desugaredQualType" : "bool (*)(const char *, size_t, SaveReasonFlags, void *)"
+          "desugaredQualType" : "bool (*)(const char *, int, SaveReasonFlags, void *)"
         }, {
           "@type" : "AstFieldDecl",
           "name" : "LoadSettings",
-          "qualType" : "ConfigLoadSettings",
-          "desugaredQualType" : "size_t (*)(char *, void *)"
+          "qualType" : "int",
+          "desugaredQualType" : "int"
         }, {
           "@type" : "AstFieldDecl",
           "name" : "SaveNodeSettings",
           "qualType" : "ConfigSaveNodeSettings",
-          "desugaredQualType" : "bool (*)(NodeId, const char *, size_t, SaveReasonFlags, void *)"
+          "desugaredQualType" : "bool (*)(NodeId, const char *, int, SaveReasonFlags, void *)"
         }, {
           "@type" : "AstFieldDecl",
           "name" : "LoadNodeSettings",
-          "qualType" : "ConfigLoadNodeSettings",
-          "desugaredQualType" : "size_t (*)(NodeId, char *, void *)"
+          "qualType" : "int",
+          "desugaredQualType" : "int"
         }, {
           "@type" : "AstFieldDecl",
           "name" : "UserPointer",

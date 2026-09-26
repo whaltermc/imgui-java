@@ -51,7 +51,7 @@ public final class ImFontAtlas extends ImGuiStructDestroyable {
      */
 
     static native void nInit(); /*
-        jclass jImFontAtlasClass = env->FindClass("imgui/ImFontAtlas");
+        jclass jImFontAtlasClass = env->FindClass("imgui/moulberry92/ImFontAtlas");
         jImFontAtlasCreateAlpha8PixelsMID = env->GetMethodID(jImFontAtlasClass, "createAlpha8Pixels", "(I)Ljava/nio/ByteBuffer;");
         jImFontAtlasCreateRgba32PixelsMID = env->GetMethodID(jImFontAtlasClass, "createRgba32Pixels", "(I)Ljava/nio/ByteBuffer;");
     */
@@ -82,6 +82,52 @@ public final class ImFontAtlas extends ImGuiStructDestroyable {
 
     private native long nAddFontDefault(long imFontConfig); /*
         return (uintptr_t)THIS->AddFontDefault(reinterpret_cast<ImFontConfig*>(imFontConfig));
+    */
+
+    /**
+     * Embedded scalable (vector) default font — recommended at any higher size. (since imgui 1.92)
+     */
+    public ImFont addFontDefaultVector() {
+        return new ImFont(nAddFontDefaultVector());
+    }
+
+    /**
+     * Embedded scalable (vector) default font — recommended at any higher size. (since imgui 1.92)
+     */
+    public ImFont addFontDefaultVector(final ImFontConfig imFontConfig) {
+        return new ImFont(nAddFontDefaultVector(imFontConfig.ptr));
+    }
+
+    private native long nAddFontDefaultVector(); /*
+        return (uintptr_t)THIS->AddFontDefaultVector();
+    */
+
+    private native long nAddFontDefaultVector(long imFontConfig); /*
+        return (uintptr_t)THIS->AddFontDefaultVector(reinterpret_cast<ImFontConfig*>(imFontConfig));
+    */
+
+    /**
+     * Embedded classic pixel-clean bitmap default font — recommended at size 13px with no scaling.
+     * (since imgui 1.92)
+     */
+    public ImFont addFontDefaultBitmap() {
+        return new ImFont(nAddFontDefaultBitmap());
+    }
+
+    /**
+     * Embedded classic pixel-clean bitmap default font — recommended at size 13px with no scaling.
+     * (since imgui 1.92)
+     */
+    public ImFont addFontDefaultBitmap(final ImFontConfig imFontConfig) {
+        return new ImFont(nAddFontDefaultBitmap(imFontConfig.ptr));
+    }
+
+    private native long nAddFontDefaultBitmap(); /*
+        return (uintptr_t)THIS->AddFontDefaultBitmap();
+    */
+
+    private native long nAddFontDefaultBitmap(long imFontConfig); /*
+        return (uintptr_t)THIS->AddFontDefaultBitmap(reinterpret_cast<ImFontConfig*>(imFontConfig));
     */
 
     public ImFont addFontFromFileTTF(final String filename, final float sizePixels) {
@@ -478,10 +524,11 @@ public final class ImFontAtlas extends ImGuiStructDestroyable {
      */
     public native void setFreeTypeRenderer(boolean enabled); /*
         #ifdef IMGUI_ENABLE_FREETYPE
+        extern const ImFontLoader* ImFontAtlasGetFontLoaderForStbTruetype();
         if (enabled) {
-            THIS->FontBuilderIO = ImGuiFreeType::GetBuilderForFreeType();
+            THIS->SetFontLoader(ImGuiFreeType::GetFontLoader());
         } else {
-            THIS->FontBuilderIO = NULL;
+            THIS->SetFontLoader(ImFontAtlasGetFontLoaderForStbTruetype());
         }
         #endif
     */
@@ -727,35 +774,35 @@ public final class ImFontAtlas extends ImGuiStructDestroyable {
     //-------------------------------------------
 
     /**
-     * Build flags (see {@link imgui.moulberry90.flag.ImFontAtlasFlags})
+     * Build flags (see {@link imgui.moulberry90.moulberry92.flag.ImFontAtlasFlags})
      */
     public int getFlags() {
         return nGetFlags();
     }
 
     /**
-     * Build flags (see {@link imgui.moulberry90.flag.ImFontAtlasFlags})
+     * Build flags (see {@link imgui.moulberry90.moulberry92.flag.ImFontAtlasFlags})
      */
     public void setFlags(final int value) {
         nSetFlags(value);
     }
 
     /**
-     * Build flags (see {@link imgui.moulberry90.flag.ImFontAtlasFlags})
+     * Build flags (see {@link imgui.moulberry90.moulberry92.flag.ImFontAtlasFlags})
      */
     public void addFlags(final int flags) {
         setFlags(getFlags() | flags);
     }
 
     /**
-     * Build flags (see {@link imgui.moulberry90.flag.ImFontAtlasFlags})
+     * Build flags (see {@link imgui.moulberry90.moulberry92.flag.ImFontAtlasFlags})
      */
     public void removeFlags(final int flags) {
         setFlags(getFlags() & ~(flags));
     }
 
     /**
-     * Build flags (see {@link imgui.moulberry90.flag.ImFontAtlasFlags})
+     * Build flags (see {@link imgui.moulberry90.moulberry92.flag.ImFontAtlasFlags})
      */
     public boolean hasFlags(final int flags) {
         return (getFlags() & flags) != 0;
@@ -772,27 +819,97 @@ public final class ImFontAtlas extends ImGuiStructDestroyable {
     // TexID implemented as SetTexID function
 
     /**
-     * Texture width desired by user before Build(). Must be a power-of-two.
-     * If have many glyphs your graphics API have texture size restrictions you may want to increase texture width to decrease height.
+     * Minimum desired atlas texture width (must be power of two). Default 512. (since imgui 1.92 —
+     * replaces the old TexDesiredWidth; set TexMinWidth = TexMaxWidth to pin a specific width.)
      */
-    public int getTexDesiredWidth() {
-        return nGetTexDesiredWidth();
+    public int getTexMinWidth() {
+        return nGetTexMinWidth();
     }
 
     /**
-     * Texture width desired by user before Build(). Must be a power-of-two.
-     * If have many glyphs your graphics API have texture size restrictions you may want to increase texture width to decrease height.
+     * Minimum desired atlas texture width (must be power of two). Default 512. (since imgui 1.92 —
+     * replaces the old TexDesiredWidth; set TexMinWidth = TexMaxWidth to pin a specific width.)
      */
-    public void setTexDesiredWidth(final int value) {
-        nSetTexDesiredWidth(value);
+    public void setTexMinWidth(final int value) {
+        nSetTexMinWidth(value);
     }
 
-    private native int nGetTexDesiredWidth(); /*
-        return THIS->TexDesiredWidth;
+    private native int nGetTexMinWidth(); /*
+        return THIS->TexMinWidth;
     */
 
-    private native void nSetTexDesiredWidth(int value); /*
-        THIS->TexDesiredWidth = value;
+    private native void nSetTexMinWidth(int value); /*
+        THIS->TexMinWidth = value;
+    */
+
+    /**
+     * Minimum desired atlas texture height (must be power of two). Default 128. (since imgui 1.92)
+     */
+    public int getTexMinHeight() {
+        return nGetTexMinHeight();
+    }
+
+    /**
+     * Minimum desired atlas texture height (must be power of two). Default 128. (since imgui 1.92)
+     */
+    public void setTexMinHeight(final int value) {
+        nSetTexMinHeight(value);
+    }
+
+    private native int nGetTexMinHeight(); /*
+        return THIS->TexMinHeight;
+    */
+
+    private native void nSetTexMinHeight(int value); /*
+        THIS->TexMinHeight = value;
+    */
+
+    /**
+     * Maximum desired atlas texture width (must be power of two). Default 8192. (since imgui 1.92)
+     * Increase when loading large glyph sets (e.g. full CJK) on legacy backends without
+     * {@code ImGuiBackendFlags_RendererHasTextures} support.
+     */
+    public int getTexMaxWidth() {
+        return nGetTexMaxWidth();
+    }
+
+    /**
+     * Maximum desired atlas texture width (must be power of two). Default 8192. (since imgui 1.92)
+     * Increase when loading large glyph sets (e.g. full CJK) on legacy backends without
+     * {@code ImGuiBackendFlags_RendererHasTextures} support.
+     */
+    public void setTexMaxWidth(final int value) {
+        nSetTexMaxWidth(value);
+    }
+
+    private native int nGetTexMaxWidth(); /*
+        return THIS->TexMaxWidth;
+    */
+
+    private native void nSetTexMaxWidth(int value); /*
+        THIS->TexMaxWidth = value;
+    */
+
+    /**
+     * Maximum desired atlas texture height (must be power of two). Default 8192. (since imgui 1.92)
+     */
+    public int getTexMaxHeight() {
+        return nGetTexMaxHeight();
+    }
+
+    /**
+     * Maximum desired atlas texture height (must be power of two). Default 8192. (since imgui 1.92)
+     */
+    public void setTexMaxHeight(final int value) {
+        nSetTexMaxHeight(value);
+    }
+
+    private native int nGetTexMaxHeight(); /*
+        return THIS->TexMaxHeight;
+    */
+
+    private native void nSetTexMaxHeight(int value); /*
+        THIS->TexMaxHeight = value;
     */
 
     /**
