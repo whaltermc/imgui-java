@@ -44,9 +44,7 @@ tasks.register('buildAll') { t ->
     t.group = 'build'
     t.description = 'Build all project sources.'
 
-    t.dependsOn ':imgui-app:shadowJar'
-
-    ['app', 'binding', 'lwjgl3'].each { module ->
+    ['binding', 'binding-natives'].each { module ->
         ['build', 'sourcesJar', 'javadocJar'].each { task ->
             t.dependsOn ":imgui-$module:$task"
         }

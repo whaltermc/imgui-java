@@ -5,7 +5,7 @@ import imgui.moulberry90.ImGuiInputTextCallbackData;
 import java.util.function.Consumer;
 
 /**
- * Callback to use in {@link imgui.moulberry92.ImGui#inputText(String, imgui.type.ImString, int, ImGuiInputTextCallback)}.
+ * Callback to use in {@link imgui.moulberry90.moulberry92.ImGui#inputText(String, imgui.type.ImString, int, ImGuiInputTextCallback)}.
  */
 public abstract class ImGuiInputTextCallback implements Consumer<ImGuiInputTextCallbackData> {
     /**
