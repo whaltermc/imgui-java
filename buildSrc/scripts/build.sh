@@ -60,6 +60,7 @@ case "$VTYPE" in
         ;;
     linux)
         echo "Running Gradle task for Linux..."
+        chmod +x gradlew
         ./gradlew imgui-binding:generateLibs -Denvs=linux -Dfreetype=true
         if [ $? -ne 0 ]; then
             echo "Gradle task for Linux failed"
@@ -85,6 +86,7 @@ case "$VTYPE" in
         fi
         export NDK_HOME
         echo "Running Gradle task for Android..."
+        chmod +x gradlew
         ./gradlew imgui-binding:generateLibs -Denvs=android -Dfreetype=true
         if [ $? -ne 0 ]; then
             echo "Gradle task for Android failed"
