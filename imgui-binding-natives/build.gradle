@@ -6,41 +6,41 @@ plugins {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(8))
     }
 }
 
-def packageName = 'imgui-java-natives-linux'
-def packageDesc = 'Native binaries for imgui-java binding for Linux'
-def moduleName = 'imgui.natives.linux'
+def packageName = 'imgui-moulberry90-natives-linux'
+def packageDesc = 'Native binaries for imgui.moulberry90 binding for Linux'
+def moduleName = 'imgui.moulberry90.natives.linux'
 def fromDir = '../bin'
-def libName = 'libimgui-moulberry92-java64.so'
+def libName = 'libimgui-java64.so'
 
 switch (findProperty('deployType')) {
     case 'windows':
-        packageName = 'imgui-java-natives-windows'
-        packageDesc = 'Native binaries for imgui-java binding for Windows'
-        moduleName = 'imgui.natives.windows'
-        libName = 'imgui-moulberry92-java64.dll'
+        packageName = 'imgui-moulberry90-natives-windows'
+        packageDesc = 'Native binaries for imgui.moulberry90 binding for Windows'
+        moduleName = 'imgui.moulberry90.natives.windows'
+        libName = 'imgui-java64.dll'
         break
     case 'linux':
-        packageName = 'imgui-java-natives-linux'
-        packageDesc = 'Native binaries for imgui-java binding for Linux'
-        moduleName = 'imgui.natives.linux'
-        libName = 'libimgui-moulberry92-java64.so'
+        packageName = 'imgui-moulberry90-natives-linux'
+        packageDesc = 'Native binaries for imgui.moulberry90 binding for Linux'
+        moduleName = 'imgui.moulberry90.natives.linux'
+        libName = 'libimgui-java64.so'
         break
     case 'macos':
-        packageName = 'imgui-java-natives-macos'
-        packageDesc = 'Native binaries for imgui-java binding for macOS'
-        moduleName = 'imgui.natives.macos'
-        libName = 'libimgui-moulberry92-java64.dylib'
+        packageName = 'imgui-moulberry90-natives-macos'
+        packageDesc = 'Native binaries for imgui.moulberry90 binding for macOS'
+        moduleName = 'imgui.moulberry90.natives.macos'
+        libName = 'libimgui-java64.dylib'
         break
 }
 
 jar {
     from(fromDir) {
         include "$libName" // this is fine
-        into 'io/imgui/java/native-bin/'
+        into 'imgui/moulberry90/native-bin/'
     }
     manifest {
         attributes  'Automatic-Module-Name': moduleName

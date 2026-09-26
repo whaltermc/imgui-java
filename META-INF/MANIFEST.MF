@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: imgui-binding-natives
+Implementation-Version: 1.92-moulberry.2-3-g196a198
+Build-Timestamp: 2026-09-26T11:31:48.190+0000
+Build-Revision: 196a19863425fbbd38419c6ca0257cd96a67a03e
+Build-Jdk: 1.8.0_504-b01 (Eclipse Temurin)
+Source-Compatibility: 1.8
+Target-Compatibility: 1.8
+Created-By: Gradle 8.14.3 
+Automatic-Module-Name: imgui.moulberry90.natives.linux
+
