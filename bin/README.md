@@ -26,12 +26,16 @@ The expected library file names for different operating systems are:
 | Windows | imgui-moulberry92-java64.dll      |
 | Linux   | libimgui-moulberry92-java64.so    |
 | macOS   | libimgui-moulberry92-java64.dylib |
+| Android | libimgui-moulberry92-java.so (`arm64-v8a`) |
 
 ### Additional Information
 
 - All libraries include statically compiled **FreeType**.
 - The macOS version is a universal library and support x86_64 and arm64 architectures.
+- Android libraries are built as ABI-specific shared libraries and are copied from `jni/libs/<abi>` during CI.
 
 ### Continuous Integration
 
 The hash sum in the `binding.sha1` file is used in continuous integration (CI) to determine if there is a need to update the native binaries.
+
+Native builds apply the compatibility patches in `patches/` automatically before compiling vendored extensions.

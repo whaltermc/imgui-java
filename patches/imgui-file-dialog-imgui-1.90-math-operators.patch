@@ -1,0 +1,30 @@
+diff --git a/ImGuiFileDialog.cpp b/ImGuiFileDialog.cpp
+index c7262b2..cb4edb2 100644
+--- a/ImGuiFileDialog.cpp
++++ b/ImGuiFileDialog.cpp
+@@ -72,10 +72,10 @@ SOFTWARE.
+ 	#define PATH_SEP '/'
+ #endif // defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
+ 
+-#include "imgui.h"
+ #ifndef IMGUI_DEFINE_MATH_OPERATORS
+ 	#define IMGUI_DEFINE_MATH_OPERATORS
+ #endif // IMGUI_DEFINE_MATH_OPERATORS
++#include "imgui.h"
+ #include "imgui_internal.h"
+ 
+ #include <cstdlib>
+diff --git a/ImGuiFileDialog.h b/ImGuiFileDialog.h
+index dceb523..5c46f76 100644
+--- a/ImGuiFileDialog.h
++++ b/ImGuiFileDialog.h
+@@ -635,6 +635,9 @@ struct IGFD_Thumbnail_Info
+ 
+ #ifdef __cplusplus
+ 
++#ifndef IMGUI_DEFINE_MATH_OPERATORS
++	#define IMGUI_DEFINE_MATH_OPERATORS
++#endif // IMGUI_DEFINE_MATH_OPERATORS
+ #include <imgui.h>
+ 
+ #include <cfloat>

@@ -30,3 +30,11 @@ apply_patch_idempotent() {
 apply_patch_idempotent \
     "$(pwd)/patches/imgui-node-editor-imgui-1.92-operator-star.patch" \
     include/imgui-node-editor
+
+apply_patch_idempotent \
+    "$(pwd)/patches/imgui-file-dialog-imgui-1.90-math-operators.patch" \
+    include/ImGuiFileDialog
+
+apply_patch_idempotent \
+    "$(pwd)/patches/imgui-file-dialog-imgui-1.92-key-api.patch" \
+    include/ImGuiFileDialog

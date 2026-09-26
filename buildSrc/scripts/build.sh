@@ -77,6 +77,34 @@ case "$VTYPE" in
         fi
         echo "SO file copied to /tmp/imgui/dst/libimgui-moulberry92-java64.so successfully"
         ;;
+        android)
+        NDK_HOME="${NDK_HOME:-$ANDROID_NDK_HOME}"
+        if [[ -z $NDK_HOME ]]; then
+          echo "Set ANDROID_NDK_HOME or NDK_HOME to your NDK path." >&2
+          exit 1
+        fi
+        export NDK_HOME
+        echo "Running Gradle task for Android..."
+        ./gradlew imgui-binding:generateLibs -Denvs=android -Dfreetype=true
+        if [ $? -ne 0 ]; then
+            echo "Gradle task for Android failed"
+            exit 1
+        fi
+
+        echo "Checking if the generated SO files exists..."
+        android_libs=(arm64-v8a)
+        for abi in "${android_libs[@]}"; do
+            library=$(find -L /tmp/imgui -type f -path "*/libs/$abi/libimgui-moulberry92-java.so" -print -quit)
+            if [[ -z $library ]]; then
+                echo "File libimgui-moulberry92-java.so not found for ABI $abi!" >&2
+                exit 1
+            fi
+            mkdir -p "/tmp/imgui/dst/$abi"
+            cp "$library" "/tmp/imgui/dst/$abi/"
+        done
+
+        echo "SO files copied to /tmp/imgui/dst/<abi> successfully"
+        ;;
     macos)
         echo "Running Gradle task for macOS and macOS ARM..."
         ./gradlew imgui-binding:generateLibs -Denvs=macos,macosarm64 -Dfreetype=true

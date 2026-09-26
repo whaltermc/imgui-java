@@ -1,0 +1,21 @@
+diff --git a/ImGuiFileDialog.cpp b/ImGuiFileDialog.cpp
+index c7262b2..cb4edb2 100644
+--- a/ImGuiFileDialog.cpp
++++ b/ImGuiFileDialog.cpp
+@@ -2335,14 +2335,13 @@ namespace IGFD
+ 
+ 		if (puFileManager.puInputPathActivated)
+ 		{
+-			auto gio = ImGui::GetIO();
+-			if (ImGui::IsKeyReleased(gio.KeyMap[ImGuiKey_Enter]))
++			if (ImGui::IsKeyReleased(ImGuiKey_Enter))
+ 			{
+ 				puFileManager.SetCurrentPath(std::string(puFileManager.puInputPathBuffer));
+ 				puFileManager.OpenCurrentPath(*this);
+ 				puFileManager.puInputPathActivated = false;
+ 			}
+-			if (ImGui::IsKeyReleased(gio.KeyMap[ImGuiKey_Escape]))
++			if (ImGui::IsKeyReleased(ImGuiKey_Escape))
+ 			{
+ 				puFileManager.puInputPathActivated = false;
+ 			}

@@ -64,6 +64,7 @@ build_freetype() {
     fi
 
     echo "Copying the generated library to $output_dir..."
+    mkdir "$(dirname "$output_dir")"
     cp objs/.libs/libfreetype.a "$output_dir"
     if [ $? -ne 0 ]; then
         echo "Failed to copy library to $output_dir"
@@ -83,6 +84,45 @@ case "$VTYPE" in
         ;;
     linux)
         build_freetype "-fPIC" "" "lib/libfreetype.a"
+        ;;
+        android)
+        NDK_HOME="${NDK_HOME:-$ANDROID_NDK_HOME}"
+        if [[ -z $NDK_HOME ]]; then
+          echo "Set ANDROID_NDK_HOME or NDK_HOME to your NDK path." >&2
+          exit 1
+        fi
+        # This ugly spam is based on android documentation https://developer.android.com/ndk/guides/other_build_systems#autoconf
+        export NDK_HOME
+        export TOOLCHAIN=$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64
+        export AR=$TOOLCHAIN/bin/llvm-ar
+        export LD=$TOOLCHAIN/bin/ld
+        export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
+        export STRIP=$TOOLCHAIN/bin/llvm-strip
+        export API=21
+
+        export TARGET=aarch64-linux-android
+        export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API"
+        export AS=$CC
+        export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API"
+        build_freetype "-fPIC" "--host=$TARGET" "lib/arm64-v8a/libfreetype.a"
+
+        export TARGET=armv7a-linux-androideabi
+        export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API"
+        export AS=$CC
+        export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API"
+        build_freetype "-fPIC" "--host $TARGET" "lib/armeabi-v7a/libfreetype.a"
+
+        export TARGET=i686-linux-android
+        export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API"
+        export AS=$CC
+        export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API"
+        build_freetype "-fPIC" "--host $TARGET" "lib/x86/libfreetype.a"
+
+        export TARGET=x86_64-linux-android
+        export CC="$TOOLCHAIN/bin/clang --target=$TARGET$API"
+        export AS=$CC
+        export CXX="$TOOLCHAIN/bin/clang++ --target=$TARGET$API"
+        build_freetype "-fPIC" "--host $TARGET" "lib/x86_64/libfreetype.a"
         ;;
     macos)
         MACOS_VERSION=10.15
